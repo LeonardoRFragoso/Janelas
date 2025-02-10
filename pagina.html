@@ -1,0 +1,648 @@
+<html data-ng-app="tospApp" class="ng-scope"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Athenas TOS+</title>
+<link href="/tosp/tosp/foundation/core/web/less/month.less" rel="stylesheet/less" type="text/css">
+<link href="/tosp/tosp/foundation/core/web/img/favicon.png" rel="shortcut icon" type="image/x-icon">
+<link href="/tosp/tosp/foundation/core/web/css/stylesheet.min.css" rel="stylesheet" type="text/css">
+<style>
+.edxDispositivoFisico { margin-top: 8px; margin-right: 10px; height: 30px; width: 250px; }
+.circulo {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background-color: #FF0000;
+}
+</style>
+</head>
+<body ng-controller="CoreController" class="ng-scope">
+	<div class="cont-geral">
+		<!--Topo-->
+		
+		<div class="apl-top-woks">
+			<div class="container-fluid no-padding-top">
+				
+					
+						<img src="/tosp/Login/logo" class="apl-lg-terminal pull-left">
+					
+					
+				
+				<!--Logo Terminal Branco-->
+                <!-- <img src="/tosp/tosp/foundation/core/web/img/apl-logo-branco.jpg" class="apl-lg-terminal pull-left" /> -->
+				<!--Logo Terminal Super-->
+				
+				<!--Logo Terminal EMAP-->
+				
+				<!--  <img src="/tosp/tosp/foundation/core/web/img/apl-logo-grupo.jpg" class="apl-lg-terminal pull-left" /> -->
+				<!--Logo Tos+-->
+				<div style="height: 43px;    margin-left: 35%;    line-height: 50px;    margin-top: 7px;" class="apl-lg-center pull-left">
+					<a href="#" target="_self"><img src="/tosp/tosp/foundation/core/web/img/apl-tos-alm.png"></a>
+				</div>
+				<!--Logo Athenas-->
+				<div class=" pull-right">
+					<img src="/tosp/tosp/foundation/core/web/img/apl-lathenas-h.jpg">
+				</div>
+			</div>
+		</div>
+        
+		<!-- Fim da Div Topo-->
+		<!--Header-->
+		<nav id="h-menu" class="navbar navbar-inverse">
+			<!--Menu Horizontal-->
+			<div class="container-fluid no-padding-top">				
+					<!-- Transforma o menu em responsivo e melhora a performance -->
+				    <div class="navbar-header">
+					    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					    <span class="sr-only">Toggle navigation</span>
+					    <span class="icon-bar"></span>
+					    <span class="icon-bar"></span>
+					    <span class="icon-bar"></span>
+					    </button>
+				    <!-- <a class="navbar-brand" href="#">Logo</a> -->
+				    </div>
+					<!--Fim Div Fav Menu-->
+					
+						<!--Menu de navegacao <li class="nav navbar-nav"><a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span>Acesso Rápido</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#PortalLiberacaoDocumental" ><span>Liberação Documental</span></a>
+</li>
+<li ><a href="#AgendamentoExpreso" ><span>Agendamento Expresso</span></a>
+</li>
+<li ><a href="#CadastroMercadoria" ><span>Cadastro de Mercadoria</span></a>
+</li>
+</ul></li>
+<li class="nav navbar-nav"><a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span>Gerenciamento</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#CentralCeR" ><span>Central de Controle e Rastreamento</span></a>
+</li>
+<li class="dropdown-submenu"><a  ><span>Upload Documento</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirUploadDocumento" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Motorista</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirMotorista" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Veículo</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirVeiculoPartner" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Cliente Usuário</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirClienteUsuario" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+<li class="nav navbar-nav"><a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span>Plugins</span></a>
+<ul class="dropdown-menu">
+<li class="dropdown-submenu"><a  ><span>Relatório Operacional</span></a>
+<ul class="dropdown-menu">
+<li class="dropdown-submenu"><a  ><span>Pesagem</span></a>
+<ul class="dropdown-menu">
+<li class="dropdown-submenu"><a  ><span>Ticket de Pesagem Contêiner</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirRelatorioPesagem" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Ticket de Pesagem Carga Solta</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirRelatorioPesagemCS" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Relatório Entradas de exportação</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirRelatorioEntradaExp" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Relatório EIR (tíquete gate)</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirRelatorioTiqueteGate" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Relatório de Avarias</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirRelatorioAvariasDescarga" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Relatório de Presença de Carga</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirRelatorioPresencaCarga" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Devolução de Vazios</span></a>
+<ul class="dropdown-menu">
+<li class="dropdown-submenu"><a  ><span>Solicitar Devolução</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirSolicitacaoDevolucaoVazio" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+<li class="dropdown-submenu"><a  ><span>Monitor Janela</span></a>
+<ul class="dropdown-menu">
+<li ><a href="#ManutenirMonitorJanela" ><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+ -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav" style="position: absolute;">
+								<li class="nav navbar-nav"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span>Acesso Rápido</span></a>
+<ul class="dropdown-menu">
+<li><a href="#PortalLiberacaoDocumental"><span>Liberação Documental</span></a>
+</li>
+<li><a href="#AgendamentoExpreso"><span>Agendamento Expresso</span></a>
+</li>
+<li><a href="#CadastroMercadoria"><span>Cadastro de Mercadoria</span></a>
+</li>
+</ul></li>
+<li class="nav navbar-nav"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span>Gerenciamento</span></a>
+<ul class="dropdown-menu">
+<li><a href="#CentralCeR"><span>Central de Controle e Rastreamento</span></a>
+</li>
+<li class="dropdown-submenu"><a><span>Upload Documento</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirUploadDocumento"><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Motorista</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirMotorista"><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Veículo</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirVeiculoPartner"><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Cliente Usuário</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirClienteUsuario"><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+<li class="nav navbar-nav"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span>Plugins</span></a>
+<ul class="dropdown-menu">
+<li class="dropdown-submenu"><a><span>Relatório Operacional</span></a>
+<ul class="dropdown-menu">
+<li class="dropdown-submenu"><a><span>Pesagem</span></a>
+<ul class="dropdown-menu">
+<li class="dropdown-submenu"><a><span>Ticket de Pesagem Contêiner</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirRelatorioPesagem"><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Ticket de Pesagem Carga Solta</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirRelatorioPesagemCS"><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Relatório Entradas de exportação</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirRelatorioEntradaExp"><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Relatório EIR (tíquete gate)</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirRelatorioTiqueteGate"><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Relatório de Avarias</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirRelatorioAvariasDescarga"><span>Manutenir</span></a>
+</li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Relatório de Presença de Carga</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirRelatorioPresencaCarga"><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Devolução de Vazios</span></a>
+<ul class="dropdown-menu">
+<li class="dropdown-submenu"><a><span>Solicitar Devolução</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirSolicitacaoDevolucaoVazio"><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+<li class="dropdown-submenu"><a><span>Monitor Janela</span></a>
+<ul class="dropdown-menu">
+<li><a href="#ManutenirMonitorJanela"><span>Manutenir</span></a>
+</li>
+</ul></li>
+</ul></li>
+
+
+							</ul>
+						</div>
+								
+			</div>
+
+			<div>
+				<ul class="nav navbar-nav navbar-right">
+
+					<!--Nome da Aplicação-->	
+					
+					<li class="titulo_menu_sec ng-binding" style="padding-right: 20px" ng-bind=""></li>
+					<!-- <li class="titulo_menu_sec">{{selectedScene}}</li> -->
+					<!-- SOMENTE PARA O OPTIMUS -->
+					
+					<!-- END: SOMENTE PARA O OPTIMUS -->
+					
+					
+					
+					
+					<li class="dropdown"><a href="" style="padding-top: 12px;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Trocar Empresa"><i class="icon-terminal fa-lg"></i><span class="caret"></span></a>
+						
+						<ul class="dropdown-menu">
+							
+								<li><a href="/tosp/Workspace/mudarEmpresa?id=1"> 
+											
+												<i class="fa fa-check fa-lg check_estilo"></i>
+											
+											
+										 <span style="padding-left: 10px;">ICTSI RIO BRASIL TERMINAL 1 S.A</span>
+								</a></li>
+							
+						</ul>
+						
+					</li>
+					
+					
+					<li class="dropdown "> <!-- ng-controller="NotificationController" -->
+						<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ng-click="exibirNotificacoesUsuario()" title="Notificações">
+							<i class="fa fa-bell fa-lg"></i><div class="circulo" style="position: relative; top: 4px; left: 5px; line-height: 12px;"></div>
+							
+						</a>
+					</li>
+					<li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Configurações"><i class="fa fa-cog fa-lg"></i><span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="" ng-click="exibirPerfil()"><i class="fa fa-user fa-lg"></i><span style="padding-left: 10px;">Perfil</span></a></li>
+							<li><a href="#CentralConfiguracao"><i class="fa fa-gear fa-lg"></i><span style="padding-left: 10px;">Configuração</span></a></li>
+							<li><a href="/tosp/Workspace/unload"><i class="fa fa-power-off fa-lg"></i><span style="padding-left: 10px;">Sair</span></a></li>
+						</ul>
+					</li>
+						
+					
+					
+				</ul>
+			</div>
+		</nav>
+
+		<!-------------------------------------------------------------------------------------------------------------------------------->
+		<!-------------------------------------------------------------------------------------------------------------------------------->
+		
+		
+		<div id="b-conteudo"> 
+			<div id="maincontent" class="row-fluid">
+				<!-- toolBar  -->
+				
+				
+					
+
+					<route-loading-indicator><div><!-- ngIf: isRouteLoading --></div></route-loading-indicator>
+					<!-- ngIf: !isRouteLoading --><!-- ngView:  --><!-- end ngIf: !isRouteLoading -->
+				
+				
+							
+		    <div class="largura windowManager ng-binding ng-scope" ng-bind-html="windowManager" data-compile=""></div></div>			
+		</div>
+		
+<div class="bottom-loading">
+	<img src="../tosp/foundation/core/web/img/blue_loader.gif"> <span>Carregando ...</span>
+</div>				
+	
+		<!-------------------------------------------------------------------------------------------------------------------------------->
+		<!-------------------------------------------------------------------------------------------------------------------------------->
+
+<!-- 		<section id="footer-ws" class="container-fluid footer-ws no-padding-top"  style="background:#FF8533">-->
+		<section id="footer-ws" class="container-fluid footer-ws no-padding-top">
+			<div class="row-fluid">
+				<div class="detalhe">
+					<!-- 
+					<footer class="container-fluid footer-ws no-padding-top"  style="background:#FF8533">
+						&copy; Copyright Todos direitos reservados à <a href="http://athen.as" target="_blank">Athenas S.A 2000/2025</a>
+						<div class="pull-right">Virgo (1.10.9.1-15) DEV</div>-->
+						
+					<footer class="container-fluid footer-ws no-padding-top">
+						© Copyright Todos direitos reservados à <a href="http://athen.as" target="_blank">Athenas S.A 2000/2025</a>
+						<div class="pull-right">Summer (1.13.2)</div>
+						<!--Summer (1.13.1) BUILD 01 -->
+					</footer>
+				</div>
+			</div>
+		</section>
+	</div>
+	<!-- Janela modal de criação de pastas -->
+	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">
+						<i class="fa fa-folder fa-lg apl-ico-fld"></i> + Criar Pasta
+					</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal ng-pristine ng-valid" role="form">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-primary">Criar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		
+
+
+<!-- Janela Modal-->
+<div class="modal fade" id="notificacoes" ng-keyup="keyEvent=$event" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header apl-title-M">
+                <button type="button" class="close" ng-click="lForm.cancelar()" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h4 class="modal-title" id="titleNotificacao">
+                    <span id="title" class="ng-binding"></span>
+                </h4>
+            </div>
+            <div class="alert alert-">
+				<i class="fa  fa-2x">&nbsp;&nbsp;</i>
+			</div>
+            <div class="modal-body clearfix">
+            	<div class="apl-tbl-M">
+            		<div class="row">
+						<div class="col-xs-12">
+            				<label>Assunto:</label>
+            				<pre lang="txt" class="ng-binding"></pre>
+            			</div>
+            		</div>
+            		<div class="row">
+						<div class="col-xs-12">
+            				<label>Mensagem:</label>
+            				<pre lang="html" style="height: 150px; overflow-y: scroll; overflow-x: scroll;" ng-bind-html="body" class="ng-binding"></pre>
+            			</div>
+            		</div>
+				</div>
+			</div>
+            
+			<div class="modal-footer">
+				<button id="btnProximo" type="button" ng-click="notificacaoProxima()" class="btn btn-primary" ng-disabled="btnProximoDisabled">Próximo</button>
+				<button id="btnAnterior" type="button" ng-click="notificacaoAnterior()" class="btn btn-primary" ng-disabled="btnAnteriorDisabled">Anterior</button>
+				<button type="button" ng-click="finalizarNotificacoes()" class="btn btn-default" data-dismiss="modal">Ok</button>
+			</div>
+            
+		</div>
+    </div>
+</div>
+
+	</div>
+	
+	<script src="/tosp/tosp/foundation/core/web/scripts/lib/lib.min.js?v=1.12.5"></script>
+	<script src="/tosp/tosp/foundation/core/web/scripts/lib/default.min.js?v=1.12.5"></script>
+	
+						
+		
+
+
+
+
+	
+	
+	<script type="text/javascript">
+	    var KDLink = { "kdBuscarDispositivoFisico" : "/tosp/ManutenirDispositivoFisico/filtrar" }
+		var internetconnection = "Verificar conexão com a internet"
+		var KDLinkNotifications = {
+			"kdNumNotificacoes" : "/tosp/ManutenirMensagemInstancia/numNotificacoes",
+			"kdNotificacoes" : "/tosp/ManutenirMensagemInstancia/notificacoes",
+			"kdNotificacoesApp" : "/tosp/ManutenirMensagemInstancia/notificacoesApp",
+			"kdFinalizarNotificacoes" : "/tosp/ManutenirMensagemInstancia/finalizarNotificacoes"
+		};
+		var KDMessageNotifications = {
+			"kdNotificacoes" : "Notificações",
+			"kdNotificacoesApp" : "Notificações da Aplicação",
+			"kdNotificacoesError" : "Mensagem de Erro",
+			"kdNotificacoesWarning" : "Mensagem de Aviso",
+			"kdNotificacoesInformation" : "Mensagem de informação",
+			"kdNotificacoesSystem" : "Mensagem de Sistema",
+			"kdSemNotificacao" : "Não foram encontradas notificações",
+			"kdSemPerfil" : "Funcionalidade em desenvolvimento.",
+			"kdNotificacaoHelpUnavailable" : "Funcionalidade indisponível"
+			
+		};	
+		var KDEntityNotifications = {
+			"kdNameMensagemInstacia" : "tosp.common.amm.kernel.mensagem.model.MensagemInstanciaDTO",
+			"kdSimpleNameMensagemInstacia" : "MensagemInstanciaDTO"
+		};
+
+		// Notificação
+		function readCookie(name) {
+		    var nameEQ = name + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i=0;i < ca.length;i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		    }
+		    return null;
+		}
+
+		function listenCookieChange(cookieName, callback) {
+		    setInterval(function() {
+		    	cookieNotificacao = readCookie(cookieName);
+	    	    if (cookieNotificacao != null && cookieNotificacao != 'null') { 
+	                return callback(true);
+	            } else {
+					return callback(false);
+			    }
+		    }, 30000);
+		}
+
+		listenCookieChange('Notification', function(bool) {
+		    if (bool)
+		    	$('.circulo').show();
+		    else
+		    	$('.circulo').hide();
+		});
+		
+		var cookieNotificacaoIni = readCookie('Notification');
+	    if (cookieNotificacaoIni != null && cookieNotificacaoIni != 'null')
+	    	$('.circulo').show();
+	    else
+	    	$('.circulo').hide();
+		
+	</script>
+
+	<!-- <script src="/tosp/tosp/product/alm/partners/kernel/liberacaodocumental/script/PortalLiberacaoDocumentalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/liberacaodocumental/script/DocumentoLiberacaoPEController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/liberacaodocumental/script/UploadCheckinDocumentalPEController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/agendamentoexpresso/script/AgendamentoExpressoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/CadastroMercadoriaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/CadastroContainerController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/CadastroCargaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/CadastroGranelController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/UploadNotaFiscalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/orgoperacional/script/ManutenirOORelacaoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/orgoperacional/script/BuscarOrgOperacionalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/carga/script/CheckinDocumentalCargaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/presencacarga/script/PresencaCargaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/fatomodal/script/FatoModalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/financeiro/apontamento/script/ApontamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/financeiro/notaespelho/script/NotaEspelhoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/financeiro/notacobranca/script/NotaCobrancaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/mapa/script/MapaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/registro/script/AssociarGMDocumentalTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/agendamentomodal/script/TransporteBuffer.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/ordemdocumento/script/CadastrarOrdemDocumentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/granel/script/CheckinDocumentalGranelController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/financeiro/notacobranca/script/EstimativaCalculoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/due/script/ConsultarDUEController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/segregated/centralcer/script/CentralCeRController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/iniciando/script/IniciandoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/documental/script/DocumentalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/operacional/script/OperacionalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/aduaneiro/script/AduaneiroController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/script/TrackingController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/notafiscal/script/UploadCSVController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/notafiscal/script/CadastrarNotaFiscalPortalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/notafiscal/script/NotaFiscalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/entregaretirada/script/DocumentoLiberacaoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/entregaretirada/script/UploadCheckinDocumentalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/entregaretirada/script/CheckinDocumentalEntregaRetiradaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/container/script/CadastrarContainerController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/container/script/CheckinDocumentalContainerController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/script/CheckinDocumentalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/registro/script/CadastrarRegistroTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/registro/script/ManutenirRegistroTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/registro/script/RegistroController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/management/age/kernel/reservajanela/script/CadastrarReservaJanelaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/management/age/kernel/reservajanela/script/ManutenirReservaJanelaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/reservajanela/script/ReservaJanelaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/management/age/kernel/agendamento/script/CadastrarAgendamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/management/age/kernel/agendamento/script/ManutenirAgendamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/agendamento/script/AgendamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/ordemtransporte/script/CadastrarOrdemTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/ordemcoleta/script/CadastrarOrdemColetaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/operacional/script/OperacionalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/fluxo/script/FluxoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/servico/posicionamento/script/ManutenirPosicionamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/servico/autorizacao/script/ManutenirAutorizacaoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/registro/script/AssociarCargaTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/documento/uploaddocumento/script/ManutenirUploadDocumentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/documento/uploaddocumento/script/CadastrarUploadDocumentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/documento/uploaddocumento/script/CadastrarUploadDocumentoArquivoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/motorista/script/ManutenirMotoristaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/transportes/veiculo/script/ManutenirVeiculoPartnerController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/cliente/script/ManutenirClienteUsuarioController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/cliente/script/UsuarioController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/orgoperacional/script/BuscarOrgOperacionalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/cliente/script/VetarClienteUsuarioController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatoriopesagem/script/ManutenirRelatorioPesagemController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatoriopesagemcs/script/ManutenirRelatorioPesagemCSController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatorioentradaexp/script/ManutenirRelatorioEntradaExpController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatoriotiquetegate/script/ManutenirRelatorioTiqueteGateController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatorioavariasdescarga/script/ManutenirRelatorioAvariasDescargaController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatoriopresencacarga/script/ManutenirRelatorioPresencaCargaController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/ictsi/devolucaovazios/kernel/solicitacaodevolucao/script/ManutenirSolicitacaoDevolucaoVazio.js?v=1.12.5"></script>
+<script src="/tosp/plugin/riobrasil/servicosexternos/kernel/janelasagendamento/script/ManutenirMonitorJanelaController.js?v=1.12.5"></script>
+  -->
+	<script src="/tosp/tosp/product/alm/partners/kernel/liberacaodocumental/script/PortalLiberacaoDocumentalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/liberacaodocumental/script/DocumentoLiberacaoPEController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/liberacaodocumental/script/UploadCheckinDocumentalPEController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/agendamentoexpresso/script/AgendamentoExpressoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/CadastroMercadoriaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/CadastroContainerController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/CadastroCargaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/CadastroGranelController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/partners/kernel/cadastromercadoria/script/UploadNotaFiscalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/orgoperacional/script/ManutenirOORelacaoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/orgoperacional/script/BuscarOrgOperacionalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/carga/script/CheckinDocumentalCargaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/presencacarga/script/PresencaCargaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/fatomodal/script/FatoModalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/financeiro/apontamento/script/ApontamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/financeiro/notaespelho/script/NotaEspelhoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/financeiro/notacobranca/script/NotaCobrancaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/mapa/script/MapaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/registro/script/AssociarGMDocumentalTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/agendamentomodal/script/TransporteBuffer.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/ordemdocumento/script/CadastrarOrdemDocumentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/granel/script/CheckinDocumentalGranelController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/financeiro/notacobranca/script/EstimativaCalculoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/due/script/ConsultarDUEController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/segregated/centralcer/script/CentralCeRController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/iniciando/script/IniciandoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/documental/script/DocumentalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/operacional/script/OperacionalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/aduaneiro/script/AduaneiroController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/script/TrackingController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/notafiscal/script/UploadCSVController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/notafiscal/script/CadastrarNotaFiscalPortalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/notafiscal/script/NotaFiscalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/entregaretirada/script/DocumentoLiberacaoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/entregaretirada/script/UploadCheckinDocumentalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/entregaretirada/script/CheckinDocumentalEntregaRetiradaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/container/script/CadastrarContainerController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/container/script/CheckinDocumentalContainerController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/checkindocumental/script/CheckinDocumentalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/registro/script/CadastrarRegistroTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/registro/script/ManutenirRegistroTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/registro/script/RegistroController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/management/age/kernel/reservajanela/script/CadastrarReservaJanelaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/management/age/kernel/reservajanela/script/ManutenirReservaJanelaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/reservajanela/script/ReservaJanelaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/management/age/kernel/agendamento/script/CadastrarAgendamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/management/age/kernel/agendamento/script/ManutenirAgendamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/agendamento/script/AgendamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/ordemtransporte/script/CadastrarOrdemTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/ordemcoleta/script/CadastrarOrdemColetaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/operacional/script/OperacionalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/tracking/fluxo/script/FluxoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/servico/posicionamento/script/ManutenirPosicionamentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/portal/alm/almp/kernel/servico/autorizacao/script/ManutenirAutorizacaoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/segregated/registro/script/AssociarCargaTransporteController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/documento/uploaddocumento/script/ManutenirUploadDocumentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/documento/uploaddocumento/script/CadastrarUploadDocumentoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/documento/uploaddocumento/script/CadastrarUploadDocumentoArquivoController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/motorista/script/ManutenirMotoristaController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/transportes/veiculo/script/ManutenirVeiculoPartnerController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/cliente/script/ManutenirClienteUsuarioController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/cliente/script/UsuarioController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/orgoperacional/script/BuscarOrgOperacionalController.js?v=1.12.5"></script>
+<script src="/tosp/tosp/product/alm/nucleus/generic/colaboradores/cliente/script/VetarClienteUsuarioController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatoriopesagem/script/ManutenirRelatorioPesagemController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatoriopesagemcs/script/ManutenirRelatorioPesagemCSController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatorioentradaexp/script/ManutenirRelatorioEntradaExpController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatoriotiquetegate/script/ManutenirRelatorioTiqueteGateController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatorioavariasdescarga/script/ManutenirRelatorioAvariasDescargaController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/magnetds/relatoriooperacional/kernel/relatoriopresencacarga/script/ManutenirRelatorioPresencaCargaController.js?v=1.12.5"></script>
+<script src="/tosp/plugin/ictsi/devolucaovazios/kernel/solicitacaodevolucao/script/ManutenirSolicitacaoDevolucaoVazio.js?v=1.12.5"></script>
+<script src="/tosp/plugin/riobrasil/servicosexternos/kernel/janelasagendamento/script/ManutenirMonitorJanelaController.js?v=1.12.5"></script>
+
+
+	
+	<!-- Configuration -->
+	<script type="text/javascript" src="/tosp/tosp/foundation/aut/kernel/configuration/script/CentralConfiguracaoController.js"></script>
+	<script type="text/javascript" src="/tosp/tosp/foundation/aut/kernel/configuration/script/ManutenirConfiguracaoController.js"></script>
+
+
+</body></html>
