@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# importacao.py
 import time
 import re
 import os
@@ -7,7 +8,7 @@ from datetime import datetime, timedelta
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, StaleElementReferenceException
 
 def verificar_dialogo(driver, wait):
     xpath = '/html/body/div[4]/md-dialog/md-dialog-actions/button[2]'
@@ -44,12 +45,12 @@ def obter_dado_da_segunda_aba(driver, wait, tipo, max_retries=3):
                 return dado
             else:
                 print(f"⚠️ [Importação] Tentativa {attempt+1}: Dado extraído está vazio. Tentando novamente...")
-                attempt += 1
-                time.sleep(2)
+        except StaleElementReferenceException:
+            print("❌ [Importação] Elemento stale, reobtendo referência...")
         except TimeoutException as e:
             print(f"❌ [Importação] Tentativa {attempt+1}: Erro na extração - {e}. Tentando novamente...")
-            attempt += 1
-            time.sleep(2)
+        attempt += 1
+        time.sleep(2)
     print(f"❌ [Importação] Não foi possível extrair o valor de DI / BOOKING / CTE para {tipo} após {max_retries} tentativas. Usando valor 'N/D'.")
     return "N/D"
 
@@ -197,7 +198,6 @@ def salvar_dados_janela(dados, data_consulta, arquivo, tipo, di_booking_cte):
       6. Qtd Veículos Reservados
     """
     df = pd.DataFrame(dados, columns=["Janela", "Hora Inicial", "Hora Final", "Qtd Veículos Reservados"])
-    # Insere as colunas extras na ordem desejada
     df.insert(0, "Tipo", tipo)
     df.insert(0, "Dia", data_consulta)
     df.insert(0, "DI / BOOKING / CTE", di_booking_cte)
@@ -261,18 +261,26 @@ def loop_de_extracao(driver, wait, tipo):
                         dados_janelas_hoje = extrair_informacoes_janela(driver, wait)
                         if dados_janelas_hoje:
                             dados_formatados = formatar_dados_janelas(dados_janelas_hoje)
-                            salvar_dados_janela(dados_formatados,
-                                                 datetime.today().strftime('%d/%m/%Y'),
-                                                 "informacoes_janelas.xlsx", tipo, current_record)
+                            salvar_dados_janela(
+                                dados_formatados,
+                                datetime.today().strftime('%d/%m/%Y'),
+                                "informacoes_janelas.xlsx",
+                                tipo,
+                                current_record
+                            )
                         inserir_data(driver, wait, dias=1)
                         clicar_botao_laranja(driver, wait)
                         clicar_janela_dia(driver, wait)
                         dados_janelas_amanha = extrair_informacoes_janela(driver, wait)
                         if dados_janelas_amanha:
                             dados_formatados = formatar_dados_janelas(dados_janelas_amanha)
-                            salvar_dados_janela(dados_formatados,
-                                                 (datetime.today() + timedelta(days=1)).strftime('%d/%m/%Y'),
-                                                 "informacoes_janelas.xlsx", tipo, current_record)
+                            salvar_dados_janela(
+                                dados_formatados,
+                                (datetime.today() + timedelta(days=1)).strftime('%d/%m/%Y'),
+                                "informacoes_janelas.xlsx",
+                                tipo,
+                                current_record
+                            )
                         try:
                             xpath_cancelar = '//*[@id="manutenirCadastroReserva"]/div/div/div[2]/div[7]/button[2]'
                             botao_cancelar = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_cancelar)))

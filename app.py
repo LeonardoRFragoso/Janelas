@@ -21,9 +21,9 @@ TELEGRAM_BOT_TOKEN = "7660740075:AAG0zy6T3QV6pdv2VOwRlxShb0UzVlNwCUk"  # Substit
 TELEGRAM_CHAT_ID = "833732395"  # Substitua pelo Chat ID correto
 
 # Configuração do Google Drive / Google Sheets
-GOOGLE_CREDENTIALS_FILE = r"C:\Users\leona\OneDrive\Documentos\DEPOT-PROJECT\gdrive_credentials.json"
-# Em vez de usar FOLDER_ID, definimos o ID da planilha que deve ser atualizada:
-GOOGLE_SHEET_ID = "1prMkez7J-wbWUGbZp-VLyfHtisSLi-XQ"  # ID da planilha (Google Sheets)
+GOOGLE_CREDENTIALS_FILE = r"C:\Users\leonardo.fragoso\Desktop\Projetos\Depot-Project\gdrive_credentials.json"
+# ID da planilha do Google Sheets que deverá ser atualizada (mantém a mesma URL)
+GOOGLE_SHEET_ID = "1prMkez7J-wbWUGbZp-VLyfHtisSLi-XQ"  # ID da planilha
 
 def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -40,7 +40,7 @@ def send_telegram_message(message):
 def update_google_sheet(file_path, sheet_id, credentials_file):
     """
     Atualiza a planilha do Google Sheets existente com o conteúdo do arquivo Excel.
-    Essa função utiliza a biblioteca gspread e gspread_dataframe para:
+    Essa função utiliza as bibliotecas gspread e gspread_dataframe para:
       - Abrir o Google Sheet pelo seu ID;
       - Limpar a primeira worksheet;
       - Escrever os dados do arquivo Excel na worksheet.
@@ -57,8 +57,8 @@ def update_google_sheet(file_path, sheet_id, credentials_file):
         sh = gc.open_by_key(sheet_id)
         worksheet = sh.sheet1  # Atualiza a primeira aba
         df = pd.read_excel(file_path)
-        worksheet.clear()
-        set_with_dataframe(worksheet, df)
+        worksheet.clear()  # Remove os dados antigos
+        set_with_dataframe(worksheet, df)  # Escreve os novos dados
         print("✅ Planilha atualizada com sucesso no Google Sheets.")
         return sheet_id
     except Exception as e:
@@ -68,14 +68,14 @@ def update_google_sheet(file_path, sheet_id, credentials_file):
 def main(chrome_driver_path: str, usuario: str, senha: str):
     """
     Inicializa o WebDriver do Chrome, realiza o login, executa os processos
-    de exportação e importação (que extraem e salvam a coluna "DI / BOOKING / CTE"
-    como primeira coluna na planilha) e, ao final, atualiza a planilha do Google Sheets
-    e envia um resumo via Telegram.
+    de exportação e importação e, ao final, atualiza a planilha do Google Sheets
+    (substituindo os dados antigos) e envia um resumo via Telegram.
     """
     # Configurar as opções do Chrome
     chrome_options = Options()
-    chrome_options.add_argument("--headless=new")
-    chrome_options.add_argument("--disable-gpu")
+    # Caso deseje executar em modo headless, descomente as linhas abaixo:
+    # chrome_options.add_argument("--headless=new")
+    # chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1920,1080")
@@ -88,7 +88,7 @@ def main(chrome_driver_path: str, usuario: str, senha: str):
     wait = WebDriverWait(driver, 20)
     
     try:
-        # 1) LOGIN E MENU
+        # 1) LOGIN E NAVEGAÇÃO NO MENU
         print("Iniciando login...")
         driver.get("https://portaldeservicos.riobrasilterminal.com/tosp/Workspace/load#/CentralCeR")
         campo = wait.until(lambda d: d.find_element(By.XPATH, '//*[@id="username"]'))
@@ -105,38 +105,39 @@ def main(chrome_driver_path: str, usuario: str, senha: str):
         time.sleep(2)
         print("✅ Menu navegado com sucesso!")
         
-        # Abrir a segunda aba para exportação
+        # 2) ABRIR A ABA SECUNDÁRIA PARA EXTRAÇÃO (EXPORTAÇÃO/IMPORTAÇÃO)
         export_url = "https://lookerstudio.google.com/u/0/reporting/55ec93e4-3114-46d5-9125-79d7191b1c0a/page/p_5jlrz7xapd"
-        print("Abrindo segunda aba para exportação...")
+        print("Abrindo nova aba para extração (exportação/importação)...")
         driver.execute_script(f"window.open('{export_url}', '_blank');")
+        # Define: janela[0] = portal principal; janela[1] = extração (export)
+        driver.switch_to.window(driver.window_handles[1])
+        time.sleep(3)  # Aguarda carregamento da aba
         
-        # Executa o loop de extração para Exportação
+        # 3) EXTRAÇÃO DA EXPORTAÇÃO
         print("Iniciando extração de exportação...")
         export_summary = run_export(driver, wait)
         
-        # Prepara a aba 2 para importação
-        if len(driver.window_handles) < 2:
-            driver.execute_script("window.open();")
+        # 4) EXTRAÇÃO DA IMPORTAÇÃO
+        # Certifica que a aba de extração (índice 1) está ativa para a extração de DI/BOOKING/CTE
         driver.switch_to.window(driver.window_handles[1])
-        time.sleep(3)
+        time.sleep(2)
+        # Caso haja algum diálogo a ser tratado, a função abaixo já é chamada pelo módulo importação
         verificar_dialogo(driver, wait)
-        
-        # Executa o loop de extração para Importação
         print("Iniciando extração de importação...")
         import_summary = run_import(driver, wait)
         
-        print("✅ Processo concluído e dados salvos (Exportação e Importação).")
+        print("✅ Processos de Exportação e Importação concluídos.")
         
-        # Leitura da planilha para compilar o resumo final
-        if os.path.exists("informacoes_janelas.xlsx"):
-            df = pd.read_excel("informacoes_janelas.xlsx")
+        # 5) LEITURA DA PLANILHA GERADA E COMPILAÇÃO DO RESUMO
+        excel_file = "informacoes_janelas.xlsx"
+        if os.path.exists(excel_file):
+            df = pd.read_excel(excel_file)
             total_registros = len(df)
             registros_export = len(df[df["Tipo"] == "exportacao"])
             registros_import = len(df[df["Tipo"] == "importacao"])
         else:
             total_registros = registros_export = registros_import = 0
         
-        # Monta o resumo da extração
         resumo = (
             "📊 Resumo da Extração:\n\n"
             "Exportação:\n"
@@ -151,8 +152,7 @@ def main(chrome_driver_path: str, usuario: str, senha: str):
             f"  - Registros de Importação: {registros_import}\n"
         )
         
-        # Em vez de criar um novo arquivo no Drive, atualizamos a planilha existente no Google Sheets:
-        excel_file = "informacoes_janelas.xlsx"
+        # 6) ATUALIZAÇÃO DO GOOGLE SHEETS
         if os.path.exists(excel_file):
             try:
                 sheet_id = update_google_sheet(excel_file, GOOGLE_SHEET_ID, GOOGLE_CREDENTIALS_FILE)
@@ -172,7 +172,7 @@ def main(chrome_driver_path: str, usuario: str, senha: str):
         print("✅ Navegador fechado.")
 
 if __name__ == '__main__':
-    # Informações definidas diretamente no código (sem interação com o usuário)
+    # Configurações definidas diretamente no código (poderão ser parametrizadas se necessário)
     chrome_driver_path = r"C:\Users\leonardo.fragoso\Desktop\Projetos\Depot-Project\chromedriver.exe"
     usuario = "redex.gate03@itracker.com.br"
     senha = "123"

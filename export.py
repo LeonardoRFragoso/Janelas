@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# export.py
 import time
 import re
 import os
@@ -24,6 +25,7 @@ def obter_dado_da_segunda_aba(driver, wait, tipo, max_retries=3):
     Caso não seja possível extrair o valor após max_retries tentativas,
     retorna "N/D" para indicar que o dado não está disponível.
     """
+    # Garante que estamos na aba de extração
     driver.switch_to.window(driver.window_handles[1])
     print(f"🔍 [Exportação] Extraindo DI / BOOKING / CTE da segunda aba para {tipo.upper()}...")
     time.sleep(3)  # Aguarda que a tabela seja renderizada
@@ -226,6 +228,7 @@ def avancar_para_proximo_registro(driver, wait, tipo):
 
 def loop_de_extracao(driver, wait, tipo):
     print(f"🔍 Iniciando loop de extração para {tipo}...")
+    # Certifica que está na aba de extração
     driver.switch_to.window(driver.window_handles[1])
     verificar_dialogo(driver, wait)
     registros_processados = set()
@@ -249,6 +252,7 @@ def loop_de_extracao(driver, wait, tipo):
             if current_record not in registros_processados:
                 registros_processados.add(current_record)
                 total_processed += 1
+                # Volta à aba principal para a consulta
                 driver.switch_to.window(driver.window_handles[0])
                 sucesso = realizar_consulta_primeira_aba(driver, wait, current_record, tipo)
                 if sucesso:
@@ -261,19 +265,26 @@ def loop_de_extracao(driver, wait, tipo):
                         dados_janelas_hoje = extrair_informacoes_janela(driver, wait)
                         if dados_janelas_hoje:
                             dados_formatados = formatar_dados_janelas(dados_janelas_hoje)
-                            # Passa o current_record como valor para "DI / BOOKING / CTE"
-                            salvar_dados_janelas(dados_formatados,
-                                                 datetime.today().strftime('%d/%m/%Y'),
-                                                 "informacoes_janelas.xlsx", tipo, current_record)
+                            salvar_dados_janelas(
+                                dados_formatados,
+                                datetime.today().strftime('%d/%m/%Y'),
+                                "informacoes_janelas.xlsx",
+                                tipo,
+                                current_record
+                            )
                         inserir_data(driver, wait, dias=1)
                         clicar_botao_laranja(driver, wait)
                         clicar_janela_dia(driver, wait)
                         dados_janelas_amanha = extrair_informacoes_janela(driver, wait)
                         if dados_janelas_amanha:
                             dados_formatados = formatar_dados_janelas(dados_janelas_amanha)
-                            salvar_dados_janelas(dados_formatados,
-                                                 (datetime.today() + timedelta(days=1)).strftime('%d/%m/%Y'),
-                                                 "informacoes_janelas.xlsx", tipo, current_record)
+                            salvar_dados_janelas(
+                                dados_formatados,
+                                (datetime.today() + timedelta(days=1)).strftime('%d/%m/%Y'),
+                                "informacoes_janelas.xlsx",
+                                tipo,
+                                current_record
+                            )
                         try:
                             xpath_cancelar = '//*[@id="manutenirCadastroReserva"]/div/div/div[2]/div[7]/button[2]'
                             botao_cancelar = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_cancelar)))
