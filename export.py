@@ -30,7 +30,9 @@ def obter_dado_da_segunda_aba(driver, wait, tipo, max_retries=3):
     print(f" [Exportação] Extraindo DI / BOOKING / CTE da segunda aba para {tipo.upper()}...")
     time.sleep(3)  # Aguarda que a tabela seja renderizada
     xpath = (
-        '//*[@id="body"]/div[2]/div/ng2-reporting-plate/plate/div/div/div/div[1]/div[1]/div[2]/div/div/div/canvas-pancake-adapter/canvas-layout/div/div/div/div/div/div/ng2-report/ng2-canvas-container/div/div[2]/ng2-canvas-component/div/div/div/div/table-wrapper/div/ng2-table/div/div[3]/div[2]/div[2]/div[3]/span'
+        '//*[@id="body"]/div[2]/div/ng2-reporting-plate/plate/div/div/div/div[1]/div[1]/div[2]/div/div/div/'
+        'canvas-pancake-adapter/canvas-layout/div/div/div/div/div/div/ng2-report/ng2-canvas-container/div/div[2]/'
+        'ng2-canvas-component/div/div/div/div/table-wrapper/div/ng2-table/div/div[3]/div[2]/div[2]/div[3]/span'
     )
     attempt = 0
     while attempt < max_retries:
@@ -236,7 +238,7 @@ def loop_de_extracao(driver, wait, tipo):
             print(f"⚠️ Nenhum dado extraído para {tipo}. Encerrando loop.")
             break
 
-        # Volta para a primeira aba para realizar a consulta
+        # Volta para a primeira aba para a consulta
         driver.switch_to.window(driver.window_handles[0])
         sucesso = realizar_consulta_primeira_aba(driver, wait, current_record, tipo)
         if not sucesso:
@@ -264,7 +266,7 @@ def loop_de_extracao(driver, wait, tipo):
                     tipo,
                     current_record
                 )
-                # Opcional: realizar a extração para o dia seguinte
+                # Extração para o dia seguinte (D+1)
                 inserir_data(driver, wait, dias=1)
                 clicar_botao_laranja(driver, wait)
                 clicar_janela_dia(driver, wait)
@@ -278,11 +280,25 @@ def loop_de_extracao(driver, wait, tipo):
                         tipo,
                         current_record
                     )
+                # Extração para D+2 (dois dias após hoje)
+                inserir_data(driver, wait, dias=2)
+                clicar_botao_laranja(driver, wait)
+                clicar_janela_dia(driver, wait)
+                dados_janelas_d2 = extrair_informacoes_janela(driver, wait)
+                if dados_janelas_d2:
+                    dados_formatados = formatar_dados_janelas(dados_janelas_d2)
+                    salvar_dados_janelas(
+                        dados_formatados,
+                        (datetime.today() + timedelta(days=2)).strftime('%d/%m/%Y'),
+                        "informacoes_janelas.xlsx",
+                        tipo,
+                        current_record
+                    )
                 try:
                     xpath_cancelar = '//*[@id="manutenirCadastroReserva"]/div/div/div[2]/div[7]/button[2]'
                     botao_cancelar = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_cancelar)))
                     botao_cancelar.click()
-                    print("✅ [Exportação] Botão 'Cancelar' clicado com sucesso após a extração do dia seguinte.")
+                    print("✅ [Exportação] Botão 'Cancelar' clicado com sucesso após a extração dos dias seguintes.")
                     time.sleep(2)
                 except TimeoutException:
                     print("❌ [Exportação] Erro ao clicar no botão 'Cancelar'. Verifique o XPath.")
@@ -294,7 +310,6 @@ def loop_de_extracao(driver, wait, tipo):
         except Exception as e:
             print(f"⚠️ [Exportação] Erro ao processar o registro {current_record}: {e}")
 
-        # Volta para a segunda aba e tenta avançar para o próximo registro
         driver.switch_to.window(driver.window_handles[1])
         if not avancar_para_proximo_registro(driver, wait, tipo):
             print("⚠️ [Exportação] Não foi possível avançar para o próximo registro. Encerrando loop.")

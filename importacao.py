@@ -226,7 +226,7 @@ def avancar_para_proximo_registro(driver, wait, tipo):
 
 def loop_de_extracao(driver, wait, tipo):
     print(f" Iniciando loop de extração para {tipo}...")
-    # Certifica-se de que estamos na segunda aba e fecha eventuais diálogos
+    # Certifica que estamos na segunda aba e fecha eventuais diálogos
     driver.switch_to.window(driver.window_handles[1])
     verificar_dialogo(driver, wait)
     
@@ -254,7 +254,7 @@ def loop_de_extracao(driver, wait, tipo):
             clicar_botao_laranja(driver, wait)
             clicar_janela_dia(driver, wait)
             
-            # Tenta extrair as janelas disponíveis para hoje
+            # Extração para o dia atual (D)
             dados_janelas_hoje = extrair_informacoes_janela(driver, wait)
             if dados_janelas_hoje:
                 dados_formatados = formatar_dados_janelas(dados_janelas_hoje)
@@ -265,37 +265,48 @@ def loop_de_extracao(driver, wait, tipo):
                     tipo,
                     current_record
                 )
-                # Extrai as janelas disponíveis para o dia seguinte
-                inserir_data(driver, wait, dias=1)
-                clicar_botao_laranja(driver, wait)
-                clicar_janela_dia(driver, wait)
-                dados_janelas_amanha = extrair_informacoes_janela(driver, wait)
-                if dados_janelas_amanha:
-                    dados_formatados = formatar_dados_janelas(dados_janelas_amanha)
-                    salvar_dados_janela(
-                        dados_formatados,
-                        (datetime.today() + timedelta(days=1)).strftime('%d/%m/%Y'),
-                        "informacoes_janelas.xlsx",
-                        tipo,
-                        current_record
-                    )
-                try:
-                    xpath_cancelar = '//*[@id="manutenirCadastroReserva"]/div/div/div[2]/div[7]/button[2]'
-                    botao_cancelar = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_cancelar)))
-                    botao_cancelar.click()
-                    print("✅ [Importação] Botão 'Cancelar' clicado com sucesso após a extração do dia seguinte.")
-                    time.sleep(2)
-                except TimeoutException:
-                    print("❌ [Importação] Erro ao clicar no botão 'Cancelar'. Verifique o XPath.")
-                
-                print(f"✅ Extração realizada com sucesso para o registro {current_record}. Encerrando loop.")
-                break  # Interrompe o loop ao encontrar um registro com janelas disponíveis
-            else:
-                print(f"⚠️ [Importação] Nenhuma janela disponível para {current_record}. Tentando próximo registro...")
+            # Extração para o dia seguinte (D+1)
+            inserir_data(driver, wait, dias=1)
+            clicar_botao_laranja(driver, wait)
+            clicar_janela_dia(driver, wait)
+            dados_janelas_amanha = extrair_informacoes_janela(driver, wait)
+            if dados_janelas_amanha:
+                dados_formatados = formatar_dados_janelas(dados_janelas_amanha)
+                salvar_dados_janela(
+                    dados_formatados,
+                    (datetime.today() + timedelta(days=1)).strftime('%d/%m/%Y'),
+                    "informacoes_janelas.xlsx",
+                    tipo,
+                    current_record
+                )
+            # Extração para D+2 (dois dias após hoje)
+            inserir_data(driver, wait, dias=2)
+            clicar_botao_laranja(driver, wait)
+            clicar_janela_dia(driver, wait)
+            dados_janelas_d2 = extrair_informacoes_janela(driver, wait)
+            if dados_janelas_d2:
+                dados_formatados = formatar_dados_janelas(dados_janelas_d2)
+                salvar_dados_janela(
+                    dados_formatados,
+                    (datetime.today() + timedelta(days=2)).strftime('%d/%m/%Y'),
+                    "informacoes_janelas.xlsx",
+                    tipo,
+                    current_record
+                )
+            try:
+                xpath_cancelar = '//*[@id="manutenirCadastroReserva"]/div/div/div[2]/div[7]/button[2]'
+                botao_cancelar = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_cancelar)))
+                botao_cancelar.click()
+                print("✅ [Importação] Botão 'Cancelar' clicado com sucesso após a extração dos dias seguintes.")
+                time.sleep(2)
+            except TimeoutException:
+                print("❌ [Importação] Erro ao clicar no botão 'Cancelar'. Verifique o XPath.")
+            
+            print(f"✅ Extração realizada com sucesso para o registro {current_record}. Encerrando loop.")
+            break  # Interrompe o loop assim que encontrar um registro com janelas disponíveis
         except Exception as e:
             print(f"⚠️ [Importação] Erro ao processar o registro {current_record}: {e}")
 
-        # Volta para a segunda aba e avança para o próximo registro
         driver.switch_to.window(driver.window_handles[1])
         if not avancar_para_proximo_registro(driver, wait, tipo):
             print("⚠️ [Importação] Não foi possível avançar para o próximo registro. Encerrando loop.")
