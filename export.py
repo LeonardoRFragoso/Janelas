@@ -27,13 +27,10 @@ def obter_dado_da_segunda_aba(driver, wait, tipo, max_retries=3):
     """
     # Garante que estamos na aba de extração
     driver.switch_to.window(driver.window_handles[1])
-    print(f"🔍 [Exportação] Extraindo DI / BOOKING / CTE da segunda aba para {tipo.upper()}...")
+    print(f" [Exportação] Extraindo DI / BOOKING / CTE da segunda aba para {tipo.upper()}...")
     time.sleep(3)  # Aguarda que a tabela seja renderizada
     xpath = (
-        '//*[@id="body"]/div[2]/div/ng2-reporting-plate/plate/div/div/div/div[1]/div[1]/'
-        'div[2]/div/div/div/canvas-pancake-adapter/canvas-layout/div/div/div/div/div/div/'
-        'ng2-report/ng2-canvas-container/div/div[2]/ng2-canvas-component/div/div/'
-        'div/div/table-wrapper/div/ng2-table/div/div[3]/div[2]/div[2]/div[4]/span'
+        '//*[@id="body"]/div[2]/div/ng2-reporting-plate/plate/div/div/div/div[1]/div[1]/div[2]/div/div/div/canvas-pancake-adapter/canvas-layout/div/div/div/div/div/div/ng2-report/ng2-canvas-container/div/div[2]/ng2-canvas-component/div/div/div/div/table-wrapper/div/ng2-table/div/div[3]/div[2]/div[2]/div[3]/span'
     )
     attempt = 0
     while attempt < max_retries:
@@ -58,7 +55,7 @@ def obter_dado_da_segunda_aba(driver, wait, tipo, max_retries=3):
 
 def realizar_consulta_primeira_aba(driver, wait, dado, tipo):
     driver.switch_to.window(driver.window_handles[0])
-    print(f"🔍 [Exportação] Retornando à primeira aba para consulta com o dado: {dado}")
+    print(f" [Exportação] Retornando à primeira aba para consulta com o dado: {dado}")
     xpath_input = '//*[@id="opcoesBusca"]/div[4]/div/input'
     try:
         campo = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_input)))
@@ -227,85 +224,83 @@ def avancar_para_proximo_registro(driver, wait, tipo):
         return False
 
 def loop_de_extracao(driver, wait, tipo):
-    print(f"🔍 Iniciando loop de extração para {tipo}...")
-    # Certifica que está na aba de extração
+    print(f" Iniciando loop de extração para {tipo}...")
+    # Certifica que está na aba de extração e fecha eventuais diálogos
     driver.switch_to.window(driver.window_handles[1])
     verificar_dialogo(driver, wait)
-    registros_processados = set()
-    overall_duplicates = 0
-    consecutive_duplicates = 0
-    total_processed = 0
-    last_record = None
-
+    
     while True:
+        # Extrai o DI/BOOKING/CTE da segunda aba
         current_record = obter_dado_da_segunda_aba(driver, wait, tipo, max_retries=3)
-        if not current_record:
+        if not current_record or current_record == "N/D":
             print(f"⚠️ Nenhum dado extraído para {tipo}. Encerrando loop.")
             break
 
-        if last_record is not None and current_record == last_record:
-            consecutive_duplicates += 1
-            overall_duplicates += 1
-            print(f"⚠️ [Exportação] Registro {current_record} duplicado. Tentativa {consecutive_duplicates} de 20 consecutivas.")
-        else:
-            consecutive_duplicates = 0
-            if current_record not in registros_processados:
-                registros_processados.add(current_record)
-                total_processed += 1
-                # Volta à aba principal para a consulta
-                driver.switch_to.window(driver.window_handles[0])
-                sucesso = realizar_consulta_primeira_aba(driver, wait, current_record, tipo)
-                if sucesso:
-                    try:
-                        selecionar_tipo_container(driver, wait)
-                        selecionar_area(driver, wait)
-                        inserir_data_hoje(driver, wait)
-                        clicar_botao_laranja(driver, wait)
-                        clicar_janela_dia(driver, wait)
-                        dados_janelas_hoje = extrair_informacoes_janela(driver, wait)
-                        if dados_janelas_hoje:
-                            dados_formatados = formatar_dados_janelas(dados_janelas_hoje)
-                            salvar_dados_janelas(
-                                dados_formatados,
-                                datetime.today().strftime('%d/%m/%Y'),
-                                "informacoes_janelas.xlsx",
-                                tipo,
-                                current_record
-                            )
-                        inserir_data(driver, wait, dias=1)
-                        clicar_botao_laranja(driver, wait)
-                        clicar_janela_dia(driver, wait)
-                        dados_janelas_amanha = extrair_informacoes_janela(driver, wait)
-                        if dados_janelas_amanha:
-                            dados_formatados = formatar_dados_janelas(dados_janelas_amanha)
-                            salvar_dados_janelas(
-                                dados_formatados,
-                                (datetime.today() + timedelta(days=1)).strftime('%d/%m/%Y'),
-                                "informacoes_janelas.xlsx",
-                                tipo,
-                                current_record
-                            )
-                        try:
-                            xpath_cancelar = '//*[@id="manutenirCadastroReserva"]/div/div/div[2]/div[7]/button[2]'
-                            botao_cancelar = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_cancelar)))
-                            botao_cancelar.click()
-                            print("✅ [Exportação] Botão 'Cancelar' clicado com sucesso após a extração do dia seguinte.")
-                            time.sleep(2)
-                        except TimeoutException:
-                            print("❌ [Exportação] Erro ao clicar no botão 'Cancelar'. Verifique o XPath.")
-                    except Exception as e:
-                        print(f"⚠️ [Exportação] Erro ao preencher o modal: {e}")
-        last_record = current_record
+        # Volta para a primeira aba para realizar a consulta
+        driver.switch_to.window(driver.window_handles[0])
+        sucesso = realizar_consulta_primeira_aba(driver, wait, current_record, tipo)
+        if not sucesso:
+            print(f"⚠️ Consulta na primeira aba falhou para {current_record}. Tentando próximo registro...")
+            driver.switch_to.window(driver.window_handles[1])
+            if not avancar_para_proximo_registro(driver, wait, tipo):
+                break
+            continue
 
+        try:
+            selecionar_tipo_container(driver, wait)
+            selecionar_area(driver, wait)
+            inserir_data_hoje(driver, wait)
+            clicar_botao_laranja(driver, wait)
+            clicar_janela_dia(driver, wait)
+
+            # Tenta extrair as janelas disponíveis para hoje
+            dados_janelas_hoje = extrair_informacoes_janela(driver, wait)
+            if dados_janelas_hoje:
+                dados_formatados = formatar_dados_janelas(dados_janelas_hoje)
+                salvar_dados_janelas(
+                    dados_formatados,
+                    datetime.today().strftime('%d/%m/%Y'),
+                    "informacoes_janelas.xlsx",
+                    tipo,
+                    current_record
+                )
+                # Opcional: realizar a extração para o dia seguinte
+                inserir_data(driver, wait, dias=1)
+                clicar_botao_laranja(driver, wait)
+                clicar_janela_dia(driver, wait)
+                dados_janelas_amanha = extrair_informacoes_janela(driver, wait)
+                if dados_janelas_amanha:
+                    dados_formatados = formatar_dados_janelas(dados_janelas_amanha)
+                    salvar_dados_janelas(
+                        dados_formatados,
+                        (datetime.today() + timedelta(days=1)).strftime('%d/%m/%Y'),
+                        "informacoes_janelas.xlsx",
+                        tipo,
+                        current_record
+                    )
+                try:
+                    xpath_cancelar = '//*[@id="manutenirCadastroReserva"]/div/div/div[2]/div[7]/button[2]'
+                    botao_cancelar = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_cancelar)))
+                    botao_cancelar.click()
+                    print("✅ [Exportação] Botão 'Cancelar' clicado com sucesso após a extração do dia seguinte.")
+                    time.sleep(2)
+                except TimeoutException:
+                    print("❌ [Exportação] Erro ao clicar no botão 'Cancelar'. Verifique o XPath.")
+                
+                print(f"✅ Extração realizada com sucesso para o registro {current_record}. Encerrando loop.")
+                break  # Interrompe o loop assim que encontrar um registro com janelas disponíveis
+            else:
+                print(f"⚠️ [Exportação] Nenhuma janela disponível para {current_record}. Tentando próximo registro...")
+        except Exception as e:
+            print(f"⚠️ [Exportação] Erro ao processar o registro {current_record}: {e}")
+
+        # Volta para a segunda aba e tenta avançar para o próximo registro
         driver.switch_to.window(driver.window_handles[1])
-        if consecutive_duplicates >= 20:
-            print(f"⚠️ [Exportação] Limite de 20 duplicatas consecutivas atingido para {tipo}. Encerrando loop.")
-            break
         if not avancar_para_proximo_registro(driver, wait, tipo):
+            print("⚠️ [Exportação] Não foi possível avançar para o próximo registro. Encerrando loop.")
             break
 
-    print(f"✅ Loop de {tipo} finalizado. Retornando ao main...")
-    return {"processed": total_processed, "duplicates": overall_duplicates}
+    print("✅ Loop de extração finalizado.")
 
 def run_export(driver, wait):
     summary = loop_de_extracao(driver, wait, "exportacao")
