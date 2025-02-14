@@ -22,7 +22,7 @@ TELEGRAM_BOT_TOKEN = "7660740075:AAG0zy6T3QV6pdv2VOwRlxShb0UzVlNwCUk"  # Substit
 TELEGRAM_CHAT_ID = "833732395"  # Substitua pelo Chat ID correto
 
 # Configuração do Google Drive
-GOOGLE_CREDENTIALS_FILE = r"C:\Users\leonardo.fragoso\Desktop\Projetos\Depot-Project\gdrive_credentials.json"
+GOOGLE_CREDENTIALS_FILE = r"/home/dev/Documentos/Janelas/gdrive_credentials.json"
 # IDs dos arquivos no Google Drive – estes arquivos já devem existir e serão atualizados (sobrescritos) a cada execução:
 # ID da planilha "informacoes_janelas" extraído do link:
 # https://docs.google.com/spreadsheets/d/1prMkez7J-wbWUGbZp-VLyfHtisSLi-XQ/edit?gid=404271548#gid=404271548
@@ -85,8 +85,8 @@ def main(chrome_driver_path: str, usuario: str, senha: str):
     """
     # Configurar as opções do Chrome
     chrome_options = Options()
-    # chrome_options.add_argument("--headless=new")
-    # chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--headless=new")
+    chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1920,1080")
@@ -224,7 +224,7 @@ def main(chrome_driver_path: str, usuario: str, senha: str):
 
 if __name__ == '__main__':
     # Informações definidas diretamente no código (sem interação com o usuário)
-    chrome_driver_path = r"C:\Users\leonardo.fragoso\Desktop\Projetos\Depot-Project\chromedriver.exe"
+    chrome_driver_path = r"/home/dev/Documentos/Janelas/chromedriver"
     usuario = "redex.gate03@itracker.com.br"
     senha = "123"
     
