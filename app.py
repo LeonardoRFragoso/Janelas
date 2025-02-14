@@ -85,8 +85,8 @@ def main(chrome_driver_path: str, usuario: str, senha: str):
     """
     # Configurar as opções do Chrome
     chrome_options = Options()
-    chrome_options.add_argument("--headless=new")
-    chrome_options.add_argument("--disable-gpu")
+    # chrome_options.add_argument("--headless=new")
+    # chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1920,1080")
@@ -141,10 +141,30 @@ def main(chrome_driver_path: str, usuario: str, senha: str):
         # Compila o resumo final com base na planilha "informacoes_janelas.xlsx"
         excel_file = "informacoes_janelas.xlsx"
         if os.path.exists(excel_file):
-            df = pd.read_excel(excel_file)
-            total_registros = len(df)
-            registros_export = len(df[df["Tipo"] == "exportacao"])
-            registros_import = len(df[df["Tipo"] == "importacao"])
+            df_info = pd.read_excel(excel_file)
+            print("Colunas encontradas em informacoes_janelas.xlsx:", df_info.columns.tolist())
+            if "Qtd Veículos Reservados" in df_info.columns:
+                # Converte para inteiro
+                df_info["Qtd Veículos Reservados"] = (
+                    pd.to_numeric(df_info["Qtd Veículos Reservados"], errors="coerce")
+                    .fillna(0)
+                    .astype(int)
+                )
+                # Criar a coluna ECH para exportação
+                df_info["ECH"] = df_info.apply(
+                    lambda row: row["Qtd Veículos Reservados"] if row["Tipo"] == "exportacao" else None, axis=1
+                )
+                # Criar a coluna RCH para importação
+                df_info["RCH"] = df_info.apply(
+                    lambda row: row["Qtd Veículos Reservados"] if row["Tipo"] == "importacao" else None, axis=1
+                )
+                # Remover a coluna original
+                df_info.drop(columns=["Qtd Veículos Reservados"], inplace=True)
+                df_info.to_excel(excel_file, index=False)
+                print("✅ Colunas 'ECH' e 'RCH' criadas com sucesso em informacoes_janelas.xlsx!")
+            total_registros = len(df_info)
+            registros_export = len(df_info[df_info["Tipo"] == "exportacao"])
+            registros_import = len(df_info[df_info["Tipo"] == "importacao"])
         else:
             total_registros = registros_export = registros_import = 0
         
@@ -193,7 +213,7 @@ def main(chrome_driver_path: str, usuario: str, senha: str):
         
         # Monta a mensagem final de resumo com informações detalhadas
         final_summary = (
-            "🚀 *Processo de Extração Concluído!*\n\n"
+            " *Processo de Extração Concluído!*\n\n"
             "*Resumo Geral:*\n"
             f"  - Finalizado em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n\n"
             "*Exportação:*\n"

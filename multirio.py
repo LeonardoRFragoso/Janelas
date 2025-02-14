@@ -36,8 +36,8 @@ def combine_headers(header_rows):
 chrome_driver_path = r"/home/dev/Documentos/Janelas/chromedriver"
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--headless=new")
-chrome_options.add_argument("--disable-gpu")
+# chrome_options.add_argument("--headless=new")
+# chrome_options.add_argument("--disable-gpu")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--window-size=1920,1080")
 chrome_options.add_argument("--log-level=3")
